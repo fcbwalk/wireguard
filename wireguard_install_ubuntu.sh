@@ -35,7 +35,8 @@ wireguard_install(){
     c2=$(cat cpublickey)
     serverip=$(curl ipv4.icanhazip.com)
     port=$(rand 10000 60000)
-    eth=$(ls /sys/class/net | awk '/^e/{print}')
+    # use eth0
+    eth="eth0"
 
 sudo cat > /etc/wireguard/wg0.conf <<-EOF
 [Interface]
@@ -105,6 +106,9 @@ wireguard_remove(){
     sudo rm -rf /etc/wireguard
 
 }
+start_wg() {
+    sudo wg-quick up wg0
+}
 stop_wg() {
     sudo wg-quick down wg0
 }
@@ -143,7 +147,8 @@ start_menu(){
     echo -e "\033[0;33m 2. 查看客户端二维码\033[0m"
     echo -e "\033[0;31m 3. 删除wireguard\033[0m"
     echo -e "\033[0;33m 4. 增加用户\033[0m"
-    echo -e "\033[0;33m 5. 停止wireguard\033[0m"
+    echo -e "\033[0;33m 5. 启动wireguard\033[0m"
+    echo -e "\033[0;33m 6. 停止wireguard\033[0m"
     echo -e " 0. 退出脚本"
     echo
     read -p "请输入数字:" num
@@ -162,6 +167,9 @@ start_menu(){
     add_user
     ;;
     5)
+    start_wg
+    ;;
+    6)
     stop_wg
     ;;
     0)
