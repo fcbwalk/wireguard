@@ -107,10 +107,10 @@ wireguard_remove(){
 
 }
 start_wg() {
-    sudo wg-quick up wg0
+    sudo ip link set up dev wg0
 }
 stop_wg() {
-    sudo wg-quick down wg0
+    sudo ip link set down dev wg0
 }
 
 add_user(){
