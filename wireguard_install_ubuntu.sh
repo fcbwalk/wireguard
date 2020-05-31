@@ -105,6 +105,9 @@ wireguard_remove(){
     sudo rm -rf /etc/wireguard
 
 }
+stop_wg() {
+    sudo wg-quick down wg0
+}
 
 add_user(){
     echo -e "\033[37;41m给新用户起个名字，不能和已有用户重复\033[0m"
@@ -140,6 +143,7 @@ start_menu(){
     echo -e "\033[0;33m 2. 查看客户端二维码\033[0m"
     echo -e "\033[0;31m 3. 删除wireguard\033[0m"
     echo -e "\033[0;33m 4. 增加用户\033[0m"
+    echo -e "\033[0;33m 5. 停止wireguard\033[0m"
     echo -e " 0. 退出脚本"
     echo
     read -p "请输入数字:" num
@@ -156,6 +160,9 @@ start_menu(){
     ;;
     4)
     add_user
+    ;;
+    5)
+    stop_wg
     ;;
     0)
     exit 1
